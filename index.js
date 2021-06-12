@@ -1,17 +1,16 @@
 var admin = require('firebase-admin');
-var serviceAccount = require("./debtbalance-fe09f-firebase-adminsdk-40051-6bb4c2b643.json");
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
+require('dotenv').config()
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_CONFIG))
 });
 
 const db=admin.firestore()
 var jsonParser = bodyParser.json()
- 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
