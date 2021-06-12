@@ -21,8 +21,9 @@ app.post('/', jsonParser, (req,res)=>{
     let name=""
     let numbers=req.body.numbers
     numbers.sort((a,b)=>{
-        return a-b
+        return a.localeCompare(b)
     })
+    console.log("Numbers"+numbers)
     numbers.forEach(number=>{
         promises.push(db.collection('Users').doc(number).get().then(doc=>{
             if(doc.exists){
