@@ -15,7 +15,7 @@ app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
 
-app.get('/', jsonParser, (req,res)=>{
+app.post('/', jsonParser, (req,res)=>{
     let users={}
     let promises=[]
     let name=""
