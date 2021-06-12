@@ -23,7 +23,6 @@ app.post('/', jsonParser, (req,res)=>{
     numbers.sort((a,b)=>{
         return a.localeCompare(b)
     })
-    console.log("Numbers"+numbers)
     numbers.forEach(number=>{
         promises.push(db.collection('Users').doc(number).get().then(doc=>{
             if(doc.exists){
@@ -34,6 +33,7 @@ app.post('/', jsonParser, (req,res)=>{
         }))
     })
     Promise.all(promises).then(()=>{
+        console.log("Name", name)
         db.collection('Groups').doc(name).get().then(doc=>{
             if(doc.exists){
                 console.log("Exists")
