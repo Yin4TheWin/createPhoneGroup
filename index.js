@@ -10,9 +10,28 @@ admin.initializeApp({
 });
 
 const db=admin.firestore()
+let cachedUsers=[]
+
+db.collection("Users")
+    .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+                cachedUsers.push(change.doc.id)
+            }
+        })
+});
+
 var jsonParser = bodyParser.json()
 app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
+})
+
+app.get('/check', (req, res)=>{
+    let number=req.query.number
+    if(!number.includes('+'))
+        number="+"+number.trim()
+    console.log(number, cachedUsers)
+    return res.send(cachedUsers.includes(number))
 })
 
 app.post('/', jsonParser, (req,res)=>{
