@@ -37,21 +37,21 @@ app.get('/check', (req, res)=>{
 app.post('/', jsonParser, (req,res)=>{
     let users={}
     let promises=[]
-    let name=""
     let numbers=req.body.numbers
-    numbers.sort((a,b)=>{
-        return a.localeCompare(b)
+    numbers.sort().forEach(number=>{
+        promises.push(db.collection('Users').doc(number).get())
     })
-    numbers.forEach(number=>{
-        promises.push(db.collection('Users').doc(number).get().then(doc=>{
+    Promise.all(promises).then(()=>{
+        let name=""
+        
+        promises.forEach(doc=>{
             if(doc.exists){
                 name+=number
                 users[number]={name: doc.data().name, balance: 0}
                 console.log(users)
             }
-        }))
-    })
-    Promise.all(promises).then(()=>{
+        })
+
         console.log("Name", name)
         db.collection('Groups').doc(name).get().then(doc=>{
             if(doc.exists){
