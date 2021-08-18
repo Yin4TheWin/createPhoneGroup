@@ -43,7 +43,7 @@ app.post('/', jsonParser, (req,res)=>{
         console.log("number init", number)
         promises.push(db.collection('Users').doc(number).get())
     })
-    Promise.all(promises).then(()=>{
+    Promise.all(promises).then((promises)=>{
         let name=""
         console.log(promises.length)
         promises.forEach(doc=>{
