@@ -38,12 +38,13 @@ app.post('/', jsonParser, (req,res)=>{
     let users={}
     let promises=[]
     let numbers=req.body.numbers
-    numbers.sort().forEach(number=>{
+    numbers.sort()
+    numbers.forEach(number=>{
         promises.push(db.collection('Users').doc(number).get())
     })
     Promise.all(promises).then(()=>{
         let name=""
-
+        console.log(promises.length)
         promises.forEach(doc=>{
             if(doc.exists){
                 const number = doc.id
