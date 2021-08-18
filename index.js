@@ -40,6 +40,7 @@ app.post('/', jsonParser, (req,res)=>{
     let numbers=req.body.numbers
     numbers.sort()
     numbers.forEach(number=>{
+        console.log("number init", number)
         promises.push(db.collection('Users').doc(number).get())
     })
     Promise.all(promises).then(()=>{
