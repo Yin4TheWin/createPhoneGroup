@@ -43,10 +43,10 @@ app.post('/', jsonParser, (req,res)=>{
     })
     Promise.all(promises).then(()=>{
         let name=""
-        
+
         promises.forEach(doc=>{
             if(doc.exists){
-                name+=number
+                name+=doc.id // number
                 users[number]={name: doc.data().name, balance: 0}
                 console.log(users)
             }
