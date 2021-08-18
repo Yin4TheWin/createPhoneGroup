@@ -54,6 +54,8 @@ app.post('/', jsonParser, (req,res)=>{
                 name+=number
                 users[number]={name: doc.data().name, balance: 0}
                 console.log(users)
+            }else{
+                console.log("Not exists")
             }
         })
 
