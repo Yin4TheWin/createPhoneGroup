@@ -48,6 +48,7 @@ app.post('/', jsonParser, (req,res)=>{
         console.log(promises.length)
         promises.forEach(doc=>{
             console.log("loop?")
+            console.log(doc)
             if(doc.exists){
                 const number = doc.id
                 console.log("Number", number)
