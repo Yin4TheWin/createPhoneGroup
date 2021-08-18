@@ -38,7 +38,9 @@ app.post('/', jsonParser, (req,res)=>{
     let users={}
     let promises=[]
     let numbers=req.body.numbers
+    console.log(numbers)
     numbers.sort()
+    numbers = [...new Set(numbers)]
     numbers.forEach(number=>{
         console.log("number init", number)
         promises.push(db.collection('Users').doc(number).get())
