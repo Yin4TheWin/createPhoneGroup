@@ -110,6 +110,7 @@ app.post('/', jsonParser, (req,res)=>{
         db.collection('Groups').doc(name).get().then(doc=>{
             if(doc.exists){
                 console.log("Exists")
+                res.json({error: "Group already exists"})
             }else{
                 db.collection('Groups').doc(name).set({
                     members: users,
@@ -124,9 +125,10 @@ app.post('/', jsonParser, (req,res)=>{
                             }
                         })
                     })
+                    res.json({status: "successful"})
                 })
             }
         })
     })
-    return res.json(numbers)
+    
 })
