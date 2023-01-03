@@ -48,6 +48,7 @@ app.post('/deleteAccount', jsonParser, (req, res) => {
             admin.auth().deleteUser(uid)
             res.json({ status: 'success' })
         }else{
+            console.log('still have projects', numOfProj)
             res.status(400).json({ error: `Could not delete profile (you are still a member of ${numOfProj} projects)` })
         }
     }).catch((error) => {
