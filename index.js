@@ -21,10 +21,7 @@ db.collection("Users")
         })
 });
 
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(bodyParser.json())
-
+var jsonParser = bodyParser.json()
 app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
@@ -37,7 +34,7 @@ app.get('/check', (req, res)=>{
     return res.send(cachedUsers.includes(number))
 })
 
-app.post('/deleteAccount', (req, res) => {
+app.post('/deleteAccount', jsonParser, (req, res) => {
     console.log(`data: ${req.body}`)
     admin.auth().verifyIdToken(req.body.idToken).then((decodedToken) => {
         console.log(decodedToken)
