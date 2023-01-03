@@ -34,6 +34,27 @@ app.get('/check', (req, res)=>{
     return res.send(cachedUsers.includes(number))
 })
 
+app.post('/deleteProfile', (req, res) => {
+    console.log(`data: ${req.body}`)
+    admin.auth().verifyIdToken(req.body.idToken).then((decodedToken) => {
+        const uid = decodedToken.phone_number;
+        return db.collection('Users').doc(uid).get()
+    })
+    .then((doc) => {
+        const userDoc = doc.data()
+        const numOfProj = userDoc?.groups.length
+        if(!numOfProj) {
+            admin.auth().deleteUser(uid)
+            res.json({ status: 'success' })
+        }else{
+            res.status(400).json({ error: `Could not delete profile (you are still a member of ${numOfProj} projects)` })
+        }
+    }).catch((error) => {
+        console.log(error)
+        res.status(400).json({ error: `Could not delete user` })
+    });
+});
+
 app.get('/leave', (req,res)=>{
     let error="Unsuccess"
     let number=req.query.number, group=req.query.group
