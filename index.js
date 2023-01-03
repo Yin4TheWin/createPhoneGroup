@@ -36,10 +36,12 @@ app.get('/check', (req, res)=>{
 
 app.post('/deleteAccount', jsonParser, (req, res) => {
     console.log(`data: ${req.body}`)
+    let uid
     admin.auth().verifyIdToken(req.body.idToken).then((decodedToken) => {
         console.log(decodedToken)
-        const uid = decodedToken.phone_number;
-        return db.collection('Users').doc(uid).get()
+        uid = decodedToken.uid;
+        const phoneNum= decodedToken.phone_number;
+        return db.collection('Users').doc(phoneNum).get()
     })
     .then((doc) => {
         const userDoc = doc.data()
