@@ -37,6 +37,7 @@ app.get('/check', (req, res)=>{
 app.post('/deleteProfile', (req, res) => {
     console.log(`data: ${req.body}`)
     admin.auth().verifyIdToken(req.body.idToken).then((decodedToken) => {
+        console.log(decodedToken)
         const uid = decodedToken.phone_number;
         return db.collection('Users').doc(uid).get()
     })
