@@ -21,7 +21,10 @@ db.collection("Users")
         })
 });
 
-var jsonParser = bodyParser.json()
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
+
 app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
