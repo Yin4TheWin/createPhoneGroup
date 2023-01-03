@@ -34,7 +34,7 @@ app.get('/check', (req, res)=>{
     return res.send(cachedUsers.includes(number))
 })
 
-app.post('/deleteProfile', (req, res) => {
+app.post('/deleteAccount', (req, res) => {
     console.log(`data: ${req.body}`)
     admin.auth().verifyIdToken(req.body.idToken).then((decodedToken) => {
         console.log(decodedToken)
